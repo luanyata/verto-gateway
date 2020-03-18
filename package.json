@@ -1,0 +1,31 @@
+{
+  "name": "verto-gateway",
+  "version": "1.0.0",
+  "description": "Conecta o front-end ao Freeswitch utilizando o mod_verto",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luanyata/verto-gateway.git"
+  },
+  "keywords": [],
+  "author": "Luan Lima <luanyata@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/luanyata/verto-gateway/issues"
+  },
+  "homepage": "https://github.com/luanyata/verto-gateway#readme",
+  "dependencies": {
+    "events": "^3.1.0",
+    "jquery": "^3.4.1",
+    "jquery-json": "^2.6.0",
+    "verto": "git+https://github.com/luanyata/Verto.git"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  }
+}
