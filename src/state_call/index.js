@@ -1,3 +1,5 @@
-require('./context')
-require('./inbound')
-require('./outbound')
+const { Context } = require('./context')
+const { InboundEvents } = require('./inbound')
+const { OutBoundEvents } = require('./outbound')
+
+module.exports = { Context, InboundEvents, OutBoundEvents }
