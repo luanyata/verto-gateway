@@ -15,7 +15,7 @@ const Actions = {
     logout: null,
 }
 
-actions.call = call = destination => {
+Actions.call = call = destination => {
     if (isNullOrUndefinedOrEmpty(destination)) {
         throw Error('Digite o numero do destinatário')
     }
@@ -40,7 +40,7 @@ actions.call = call = destination => {
     })
 }
 
-actions.answerCall = answerCall = () => {
+Actions.answerCall = answerCall = () => {
     Context.currentCall.answer({
         outgoingBandwidth: 'default',
         incomingBandwidth: 'default',
@@ -54,18 +54,18 @@ actions.answerCall = answerCall = () => {
     })
 }
 
-actions.dtmf = dtmf = digit => Context.currentCall.dtmf(digit)
+Actions.dtmf = dtmf = digit => Context.currentCall.dtmf(digit)
 
-actions.hangup = hangup = () => HandleVerto.hangup()
+Actions.hangup = hangup = () => HandleVerto.hangup()
 
-actions.mute = mute = () => Context.currentCall.setMute('off')
+Actions.mute = mute = () => Context.currentCall.setMute('off')
 
-actions.unmute = unmute = () => Context.currentCall.setMute('on')
+Actions.unmute = unmute = () => Context.currentCall.setMute('on')
 
-actions.hold = hold = () => Context.currentCall.hold()
+Actions.hold = hold = () => Context.currentCall.hold()
 
-actions.unhold = unhold = () => Context.currentCall.unhold()
+Actions.unhold = unhold = () => Context.currentCall.unhold()
 
-actions.logout = logout = () => HandleVerto.logout()
+Actions.logout = logout = () => HandleVerto.logout()
 
 module.exports = { Actions }
