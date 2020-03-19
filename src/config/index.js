@@ -1,10 +1,9 @@
-const $ = require('verto/src/jquery.verto')
 const { WsEvent } = require('../enums')
 const { StateCall } = require('../state_call')
 const { InboundEvents } = require('../state_call/inbound')
 const { OutBoundEvents } = require('../state_call/outbound')
 
-const HandleVerto = null
+let HandleVerto = null
 
 const start = data => {
     $.verto.init({}, bootstrap(data))
