@@ -5,13 +5,13 @@ const Ring = {
 let audio = null
 let loop = null
 
-Ring.start = start = idTag => {
+Ring.start = idTag => {
     audio = document.getElementById(idTag)
     audio.play()
     loop = setInterval(() => audio.play(), 2000)
 }
 
-Ring.end = end = idTag => {
+Ring.end = idTag => {
     audio = document.getElementById(idTag)
     clearInterval(loop)
     audio.pause()
