@@ -4,18 +4,13 @@ const { StateCall } = require('../state_call')
 const { InboundEvents } = require('../state_call/inbound')
 const { OutBoundEvents } = require('../state_call/outbound')
 
-const Config = {
-    bootstrap: null,
-    start: null,
-}
-
 const HandleVerto = null
 
-Config.start = start = data => {
+const start = data => {
     $.verto.init({}, bootstrap(data))
 }
 
-Config.bootstrap = bootstrap = data => {
+const bootstrap = data => {
     const { agent, wssAddress, wsFallbackURL, tag, useIce } = data
 
     const callbacks = {
@@ -53,19 +48,19 @@ Config.bootstrap = bootstrap = data => {
     )
 }
 
-onWSLogin = (verto, success) => {
+const onWSLogin = (verto, success) => {
     console.log('onWSLogin', success)
 }
 
-onWSClose = (verto, success) => {
+const onWSClose = (verto, success) => {
     console.log('onWSClose', success)
 }
 
-onWSConnect = (verto, success) => {
+const onWSConnect = (verto, success) => {
     console.log('onWSConnect', success)
 }
 
-onDialogState = d => {
+const onDialogState = d => {
     const {
         INBOUND,
         TRYING,
@@ -96,55 +91,42 @@ onDialogState = d => {
 
     switch (d.state.name) {
         case TRYING:
-            eventVerto(direction, null, OutBoundEvents.tryingOutbound, d)
+            eventVerto(direction, null, OutBoundEvents.trying, d)
             break
         case RINGING:
-            eventVerto(direction, InboundEvents.ringingInbound, null, d)
+            eventVerto(direction, InboundEvents.ring, null, d)
             break
         case EARLY:
-            eventVerto(
-                direction,
-                InboundEvents.earlyInbound,
-                OutBoundEvents.earlyOutBound,
-                d
-            )
+            eventVerto(direction, InboundEvents.early, OutBoundEvents.early, d)
             break
         case ANSWERING:
             eventVerto(
                 direction,
-                InboundEvents.answeringInbound,
-                OutBoundEvents.answeringOutBound,
+                InboundEvents.answering,
+                OutBoundEvents.answering,
                 d
             )
             break
         case RECOVERING:
         case ACTIVE:
         case HOLD:
-            eventVerto(
-                direction,
-                InboundEvents.activeInbound,
-                OutBoundEvents.activeOutbound
-            )
+            eventVerto(direction, InboundEvents.active, OutBoundEvents.active)
             break
         case HANGUP:
             eventVerto(
                 direction,
-                InboundEvents.hangupInbound,
-                OutBoundEvents.hangupOutbound,
+                InboundEvents.hangup,
+                OutBoundEvents.hangup,
                 d
             )
             break
         case DESTROY:
-            eventVerto(
-                direction,
-                InboundEvents.destroyInbound,
-                OutBoundEvents.destroyOutbound
-            )
+            eventVerto(direction, InboundEvents.destroy, OutBoundEvents.destroy)
             break
     }
 }
 
-onWSException = e => {
+const onWSException = e => {
     let reason = ''
     switch (e) {
         case 1000:
@@ -196,13 +178,18 @@ onWSException = e => {
 
 const eventVerto = (
     direction,
-    InboundEventsbound,
-    OutBoundEventsbound,
+    InboundEvents,
+    OutBoundEvents,
     dialog = null
 ) => {
     direction === StateCall.INBOUND
-        ? InboundEventsbound(dialog)
-        : OutBoundEventsbound(dialog)
+        ? InboundEvents(dialog)
+        : OutBoundEvents(dialog)
+}
+
+const Config = {
+    bootstrap,
+    start,
 }
 
 module.exports = { HandleVerto, Config }

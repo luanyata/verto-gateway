@@ -12,7 +12,7 @@ const OutBoundEvents = {
 }
 const calls = []
 
-OutBoundEvents.trying = tryingOutbound = ({ callID }) => {
+OutBoundEvents.trying = ({ callID }) => {
     calls.push(Context.currentCall.callID)
 
     if (Context.inCourse) {
@@ -24,20 +24,20 @@ OutBoundEvents.trying = tryingOutbound = ({ callID }) => {
     }
 }
 
-OutBoundEvents.early = earlyOutBound = ({ params }) => {
+OutBoundEvents.early = ({ params }) => {
     Events.isVideoCall.emit(params.useVideo)
 }
 
-OutBoundEvents.answering = answeringOutBound = () => {
+OutBoundEvents.answering = () => {
     console.log('Answering OutBound')
 }
 
-OutBoundEvents.active = activeOutbound = () => {
+OutBoundEvents.active = () => {
     Events.calling.emit(true)
     Events.callCurrent.emit(true)
 }
 
-OutBoundEvents.hangup = hangupOutbound = dialog => {
+OutBoundEvents.hangup = dialog => {
     console.log(`Chamada encerrada. Motivo: ${dialog.cause}`)
     if (Context.currentCall.callID === Context.firstCallID) {
         Context.inCourse = false
@@ -47,7 +47,7 @@ OutBoundEvents.hangup = hangupOutbound = dialog => {
     }
 }
 
-OutBoundEvents.destroy = destroyOutbound = () => {
+OutBoundEvents.destroy = () => {
     if (calls.pop() === Context.firstCallID) {
         Context.firstCallID = ''
         Context.currentCall = null

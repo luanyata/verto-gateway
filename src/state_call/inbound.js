@@ -9,12 +9,12 @@ const InboundEvents = {
     ring: null,
     early: null,
     answering: null,
-    activete: null,
+    active: null,
     hangup: null,
     destroy: null,
 }
 
-InboundEvents.ring = ringingInbound = ({ callID }) => {
+InboundEvents.ring = ({ callID }) => {
     calls.push(callID)
 
     if (Context.inCourse) {
@@ -31,11 +31,11 @@ InboundEvents.ring = ringingInbound = ({ callID }) => {
     }
 }
 
-InboundEvents.early = earlyInbound = () => {
+InboundEvents.early = () => {
     console.log('Early Inbound')
 }
 
-InboundEvents.answering = answeringInbound = dialog => {
+InboundEvents.answering = dialog => {
     endRing()
     if (dialog.params.useVideo) {
         Events.isVideoCall.emit(true)
@@ -44,12 +44,12 @@ InboundEvents.answering = answeringInbound = dialog => {
     Events.callCurrent.emit(true)
 }
 
-InboundEvents.activete = activeInbound = () => {
+InboundEvents.active = () => {
     Events.calling.emit(true)
     Events.callCurrent.emit(true)
 }
 
-InboundEvents.hangup = hangupInbound = dialog => {
+InboundEvents.hangup = dialog => {
     console.log(`Chamada encerrada. Motivo: ${dialog.cause}`)
     endRing()
     if (dialog.params.useVideo) {
@@ -61,7 +61,7 @@ InboundEvents.hangup = hangupInbound = dialog => {
     }
 }
 
-InboundEvents.destroy = destroyInbound = () => {
+InboundEvents.destroy = () => {
     if (calls.pop() === Context.firstCallID || calls.length === 0) {
         Context.currentCall = null
         Context.inCourse = false
