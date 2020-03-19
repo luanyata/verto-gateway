@@ -6,6 +6,7 @@ const Events = {
     callReceiver: new EventEmitter(),
     callAnswered: new EventEmitter(),
     dataBandWidth: new EventEmitter(),
+    handleVerto: new EventEmitter(),
     isVideoCall: new EventEmitter(),
     missedCall: new EventEmitter(),
     stateSubscriber: new EventEmitter(),

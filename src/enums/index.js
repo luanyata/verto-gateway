@@ -1,4 +1,4 @@
 const { StateCall } = require('./statusCall')
-const { WsEvent } = require('./wsEvents')
+const { WsEventEnum } = require('./wsEvents')
 
-module.exports = { StateCall, WsEvent }
+module.exports = { StateCall, WsEventEnum }

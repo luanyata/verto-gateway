@@ -1,7 +1,10 @@
 const { isNullOrUndefinedOrEmpty } = require('../utils')
-const { HandleVerto } = require('../config')
 const { KeyStorage } = require('../storage')
 const { Context } = require('../state_call')
+
+let HandleVerto = null
+
+Events.handleVerto.on('handleVerto', handle => (HandleVerto = handle))
 
 const Actions = {
     call: null,

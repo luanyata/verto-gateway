@@ -1,4 +1,5 @@
-const { WsEvent } = require('../enums')
+const { WsEventEnum } = require('../enums')
+const { Events } = require('../events')
 const { StateCall } = require('../state_call')
 const { InboundEvents } = require('../state_call/inbound')
 const { OutBoundEvents } = require('../state_call/outbound')
@@ -45,6 +46,8 @@ const bootstrap = data => {
         },
         callbacks
     )
+
+    Events.handleVerto.emit('handleVerto', HandleVerto)
 }
 
 const onWSLogin = (verto, success) => {
@@ -129,49 +132,49 @@ const onWSException = e => {
     let reason = ''
     switch (e) {
         case 1000:
-            reason = WsEvent.CLOSE_NORMAL
+            reason = WsEventEnum.CLOSE_NORMAL
             break
         case 1001:
-            reason = WsEvent.CLOSE_GOING_AWAY
+            reason = WsEventEnum.CLOSE_GOING_AWAY
             break
         case 1002:
-            reason = WsEvent.CLOSE_PROTOCOL_ERROR
+            reason = WsEventEnum.CLOSE_PROTOCOL_ERROR
             break
         case 1003:
-            reason = WsEvent.CLOSE_UNSUPPORTED
+            reason = WsEventEnum.CLOSE_UNSUPPORTED
             break
         case 1005:
-            reason = WsEvent.CLOSE_NO_STATUS
+            reason = WsEventEnum.CLOSE_NO_STATUS
             break
         case 1006:
-            reason = WsEvent.CLOSE_ABNORMAL
+            reason = WsEventEnum.CLOSE_ABNORMAL
             break
         case 1007:
-            reason = WsEvent.UNSUPPORTED_DATA
+            reason = WsEventEnum.UNSUPPORTED_DATA
             break
         case 1008:
-            reason = WsEvent.POLICY_VIOLATION
+            reason = WsEventEnum.POLICY_VIOLATION
             break
         case 1009:
-            reason = WsEvent.CLOSE_TOO_LARGE
+            reason = WsEventEnum.CLOSE_TOO_LARGE
             break
         case 1010:
-            reason = WsEvent.MISSING_EXTENSION
+            reason = WsEventEnum.MISSING_EXTENSION
             break
         case 1011:
-            reason = WsEvent.INTERNAL_ERROR
+            reason = WsEventEnum.INTERNAL_ERROR
             break
         case 1012:
-            reason = WsEvent.SERVICE_RESTART
+            reason = WsEventEnum.SERVICE_RESTART
             break
         case 1013:
-            reason = WsEvent.TRY_AGAIN_LATER
+            reason = WsEventEnum.TRY_AGAIN_LATER
             break
         case 1015:
-            reason = WsEvent.TLS_HANDSHAKE
+            reason = WsEventEnum.TLS_HANDSHAKE
             break
         default:
-            reason = WsEvent.DEFAULT_STATUS
+            reason = WsEventEnum.DEFAULT_STATUS
     }
 }
 
@@ -187,8 +190,7 @@ const eventVerto = (
 }
 
 const Config = {
-    bootstrap,
     start,
 }
 
-module.exports = { HandleVerto, Config }
+module.exports = { Config }
