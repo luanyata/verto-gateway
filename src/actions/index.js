@@ -1,5 +1,4 @@
 const { isNullOrUndefinedOrEmpty } = require('../utils')
-const { KeyStorage } = require('../storage')
 const { Context } = require('../state_call')
 
 let HandleVerto = null
@@ -18,19 +17,16 @@ const Actions = {
     logout: null,
 }
 
-Actions.call = destination => {
+Actions.call = (origin, destination) => {
     if (isNullOrUndefinedOrEmpty(destination)) {
-        throw Error('Digite o numero do destinatário')
+        console.warn('Digite o numero do destinatário')
+        return
     }
-
-    const currentUser = sessionStorage
-        .getItem(KeyStorage.EXTENSION)
-        .split('@')[0]
 
     Context.currentCall = HandleVerto.newCall({
         destination_number: destination,
-        caller_id_name: currentUser,
-        caller_id_number: currentUser,
+        caller_id_name: origin,
+        caller_id_number: origin,
         outgoingBandwidth: 'default',
         incomingBandwidth: 'default',
         useStereo: false,
