@@ -1,7 +1,5 @@
 const KeyStorage = {
     AUDIO_OUT: 'audioOut',
-    AUTO_ANSWER: 'autoAnswer',
-    CLICK_TO_CALL: 'clickToCall',
     ECHO_CANCELLATION: 'echoCancellation',
     ENABLE_AGC: 'enableAGC',
     ENABLE_VIDEO: 'enableVideo',

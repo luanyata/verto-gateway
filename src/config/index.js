@@ -1,8 +1,6 @@
-const { WsEventEnum } = require('../enums')
+const { WsEventEnum, StateCall } = require('../enums')
 const { Events } = require('../events')
-const { StateCall } = require('../state_call')
-const { InboundEvents } = require('../state_call/inbound')
-const { OutBoundEvents } = require('../state_call/outbound')
+const { Context, InboundEvents, OutBoundEvents } = require('../state-call')
 
 let HandleVerto = null
 
@@ -74,17 +72,16 @@ const onDialogState = d => {
         HOLD,
         HANGUP,
         DESTROY,
-        context,
     } = StateCall
 
-    if (!context.currentCall) {
-        context.currentCall = d
+    if (!Context.currentCall) {
+        Context.currentCall = d
     }
 
     if (
-        context.inCourse &&
+        Context.inCourse &&
         d.direction.name === INBOUND &&
-        context.currentCall.callID !== d.callID
+        Context.currentCall.callID !== d.callID
     ) {
         d.hangup()
         return
