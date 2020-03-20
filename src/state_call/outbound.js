@@ -1,7 +1,3 @@
-const { Context } = require('./')
-const { HandleVerto } = require('../config')
-const { Events } = require('../events')
-
 const OutBoundEvents = {
     trying: null,
     early: null,
@@ -10,52 +6,29 @@ const OutBoundEvents = {
     hangup: null,
     destroy: null,
 }
-const calls = []
 
-OutBoundEvents.trying = ({ callID }) => {
-    calls.push(Context.currentCall.callID)
-
-    if (Context.inCourse) {
-        HandleVerto.hangup(callID)
-    } else {
-        Context.firstCallID = Context.currentCall.callID
-        Context.inCourse = true
-        Events.calling.emit(true)
-    }
+OutBoundEvents.trying = () => {
+    console.log('Trying Outbound')
 }
 
-OutBoundEvents.early = ({ params }) => {
-    Events.isVideoCall.emit(params.useVideo)
+OutBoundEvents.early = () => {
+    console.log('Early Outbound')
 }
 
 OutBoundEvents.answering = () => {
-    console.log('Answering OutBound')
+    console.log('Answering Outbound')
 }
 
 OutBoundEvents.active = () => {
-    Events.calling.emit(true)
-    Events.callCurrent.emit(true)
+    console.log('Active Outbound')
 }
 
-OutBoundEvents.hangup = dialog => {
-    console.log(`Chamada encerrada. Motivo: ${dialog.cause}`)
-    if (Context.currentCall.callID === Context.firstCallID) {
-        Context.inCourse = false
-        if (dialog.params.useVideo) {
-            Events.isVideoCall.emit(false)
-        }
-    }
+OutBoundEvents.hangup = () => {
+    console.log('Hangup Outbound')
 }
 
 OutBoundEvents.destroy = () => {
-    if (calls.pop() === Context.firstCallID) {
-        Context.firstCallID = ''
-        Context.currentCall = null
-        Context.inCourse = false
-        Events.callCurrent.emit(false)
-        Events.calling.emit(false)
-        Events.missedCall.emit(true)
-    }
+    console.log('Destroy Outbound')
 }
 
 module.exports = { OutBoundEvents }
