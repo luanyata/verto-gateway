@@ -40,7 +40,7 @@ Actions.call = (origin, destination) => {
     })
 }
 
-Actions.answerCall = () => {
+Actions.answer = () => {
     Context.currentCall.answer({
         outgoingBandwidth: 'default',
         incomingBandwidth: 'default',
