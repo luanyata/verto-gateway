@@ -1,8 +1,8 @@
 const Context = {
-    currentCall: null,
-    inCourse: false,
-    firstCallID: '',
     calls: [],
+    currentCall: null,
+    firstCallID: '',
+    inCourse: false,
 }
 
 module.exports = { Context }

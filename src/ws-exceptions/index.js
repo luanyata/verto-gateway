@@ -1,4 +1,4 @@
-const WsEventEnum = {
+const WsException = {
     CLOSE_NORMAL: `Conexao fechada normalmente`,
     CLOSE_GOING_AWAY: `O servidor perdeu a conexão buscamento ou o usuário navegou para fora da página que abriu a conexão.`,
     CLOSE_PROTOCOL_ERROR: `O servidor finalizou a conexão devido a um erro de protocolo.`,
@@ -16,4 +16,4 @@ const WsEventEnum = {
     DEFAULT_STATUS: `Ocorreu um erro inesperado`,
 }
 
-module.exports = { WsEventEnum }
+module.exports = { WsException }

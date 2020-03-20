@@ -1,6 +1,6 @@
-const { isNullOrUndefinedOrEmpty } = require('../utils')
-const { Context } = require('../state-call')
 const { Events } = require('../events')
+const { Context } = require('../models')
+const { isNullOrUndefinedOrEmpty } = require('../utils')
 
 let HandleVerto = null
 
@@ -8,7 +8,7 @@ Events.handleVerto.on('handleVerto', handle => (HandleVerto = handle))
 
 const Actions = {
     call: null,
-    answerCall: null,
+    answer: null,
     dtmf: null,
     hangup: null,
     mute: null,

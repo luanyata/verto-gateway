@@ -1,4 +1,4 @@
-const OutBoundEvents = {
+const OutboundEvents = {
     trying: null,
     early: null,
     answering: null,
@@ -7,28 +7,28 @@ const OutBoundEvents = {
     destroy: null,
 }
 
-OutBoundEvents.trying = () => {
+OutboundEvents.trying = () => {
     console.log('Trying Outbound')
 }
 
-OutBoundEvents.early = () => {
+OutboundEvents.early = () => {
     console.log('Early Outbound')
 }
 
-OutBoundEvents.answering = () => {
+OutboundEvents.answering = () => {
     console.log('Answering Outbound')
 }
 
-OutBoundEvents.active = () => {
+OutboundEvents.active = () => {
     console.log('Active Outbound')
 }
 
-OutBoundEvents.hangup = () => {
+OutboundEvents.hangup = () => {
     console.log('Hangup Outbound')
 }
 
-OutBoundEvents.destroy = () => {
+OutboundEvents.destroy = () => {
     console.log('Destroy Outbound')
 }
 
-module.exports = { OutBoundEvents }
+module.exports = { OutboundEvents }

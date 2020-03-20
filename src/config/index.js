@@ -1,6 +1,8 @@
-const { WsEventEnum, StateCall } = require('../enums')
+const { Context } = require('../models')
 const { Events } = require('../events')
-const { Context, InboundEvents, OutBoundEvents } = require('../state-call')
+const { InboundEvents, OutboundEvents } = require('../state-call')
+const { StateCall } = require('../enums')
+const { WsException } = require('../ws-exceptions')
 
 let HandleVerto = null
 
@@ -90,37 +92,37 @@ const onDialogState = d => {
 
     switch (d.state.name) {
         case TRYING:
-            eventVerto(direction, null, OutBoundEvents.trying, d)
+            eventVerto(direction, null, OutboundEvents.trying, d)
             break
         case RINGING:
             eventVerto(direction, InboundEvents.ring, null, d)
             break
         case EARLY:
-            eventVerto(direction, InboundEvents.early, OutBoundEvents.early, d)
+            eventVerto(direction, InboundEvents.early, OutboundEvents.early, d)
             break
         case ANSWERING:
             eventVerto(
                 direction,
                 InboundEvents.answering,
-                OutBoundEvents.answering,
+                OutboundEvents.answering,
                 d
             )
             break
         case RECOVERING:
         case ACTIVE:
         case HOLD:
-            eventVerto(direction, InboundEvents.active, OutBoundEvents.active)
+            eventVerto(direction, InboundEvents.active, OutboundEvents.active)
             break
         case HANGUP:
             eventVerto(
                 direction,
                 InboundEvents.hangup,
-                OutBoundEvents.hangup,
+                OutboundEvents.hangup,
                 d
             )
             break
         case DESTROY:
-            eventVerto(direction, InboundEvents.destroy, OutBoundEvents.destroy)
+            eventVerto(direction, InboundEvents.destroy, OutboundEvents.destroy)
             break
     }
 }
@@ -129,61 +131,61 @@ const onWSException = e => {
     let reason = ''
     switch (e) {
         case 1000:
-            reason = WsEventEnum.CLOSE_NORMAL
+            reason = WsException.CLOSE_NORMAL
             break
         case 1001:
-            reason = WsEventEnum.CLOSE_GOING_AWAY
+            reason = WsException.CLOSE_GOING_AWAY
             break
         case 1002:
-            reason = WsEventEnum.CLOSE_PROTOCOL_ERROR
+            reason = WsException.CLOSE_PROTOCOL_ERROR
             break
         case 1003:
-            reason = WsEventEnum.CLOSE_UNSUPPORTED
+            reason = WsException.CLOSE_UNSUPPORTED
             break
         case 1005:
-            reason = WsEventEnum.CLOSE_NO_STATUS
+            reason = WsException.CLOSE_NO_STATUS
             break
         case 1006:
-            reason = WsEventEnum.CLOSE_ABNORMAL
+            reason = WsException.CLOSE_ABNORMAL
             break
         case 1007:
-            reason = WsEventEnum.UNSUPPORTED_DATA
+            reason = WsException.UNSUPPORTED_DATA
             break
         case 1008:
-            reason = WsEventEnum.POLICY_VIOLATION
+            reason = WsException.POLICY_VIOLATION
             break
         case 1009:
-            reason = WsEventEnum.CLOSE_TOO_LARGE
+            reason = WsException.CLOSE_TOO_LARGE
             break
         case 1010:
-            reason = WsEventEnum.MISSING_EXTENSION
+            reason = WsException.MISSING_EXTENSION
             break
         case 1011:
-            reason = WsEventEnum.INTERNAL_ERROR
+            reason = WsException.INTERNAL_ERROR
             break
         case 1012:
-            reason = WsEventEnum.SERVICE_RESTART
+            reason = WsException.SERVICE_RESTART
             break
         case 1013:
-            reason = WsEventEnum.TRY_AGAIN_LATER
+            reason = WsException.TRY_AGAIN_LATER
             break
         case 1015:
-            reason = WsEventEnum.TLS_HANDSHAKE
+            reason = WsException.TLS_HANDSHAKE
             break
         default:
-            reason = WsEventEnum.DEFAULT_STATUS
+            reason = WsException.DEFAULT_STATUS
     }
 }
 
 const eventVerto = (
     direction,
     InboundEvents,
-    OutBoundEvents,
+    OutboundEvents,
     dialog = null
 ) => {
     direction === StateCall.INBOUND
         ? InboundEvents(dialog)
-        : OutBoundEvents(dialog)
+        : OutboundEvents(dialog)
 }
 
 const Config = {

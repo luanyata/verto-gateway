@@ -1,6 +1,6 @@
 const Ring = {
-    start: null,
     end: null,
+    start: null,
 }
 let audio = null
 let loop = null

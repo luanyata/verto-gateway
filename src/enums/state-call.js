@@ -1,6 +1,6 @@
 const StateCall = {
-    ANSWERING: 'answering',
     ACTIVE: 'active',
+    ANSWERING: 'answering',
     DESTROY: 'destroy',
     EARLY: 'early',
     HANGUP: 'hangup',
