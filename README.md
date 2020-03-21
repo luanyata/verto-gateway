@@ -30,7 +30,7 @@ Agora carregue os javascripts no seu HTML antes dos seus javascript:
 
 ```html
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-<script src="../lib/node_modules/jquery-json/dist/jquery.json.min.js"></script>
+<script src="../node_modules/jquery-json/dist/jquery.json.min.js"></script>
 <script src="../node_modules/verto/src/jquery.verto.js"></script>
 <script src="../node_modules/verto/src/jquery.FSRTC.js"></script>
 <script src="../node_modules/verto/src/jquery.jsonrpcclient.js"></script>
@@ -38,7 +38,7 @@ Agora carregue os javascripts no seu HTML antes dos seus javascript:
 
 ## Utilizando
 
-### **Tag Audio:**
+### **Tags Audio:**
 
 Para que o audio das chamadas sejam executada, é necessario a criação da `tag audio` seguindo algumas recomendações:
 
@@ -48,6 +48,16 @@ Para que o audio das chamadas sejam executada, é necessario a criação da `tag
 
 ```html
 <audio id="call" hidden autoplay></audio>
+```
+
+Para que o ramal que recebe a chamada sinalize que está tocando deve ser criada uma `tag audio` seguindo algumas recomendações:
+
+-   Obrigatoriamente deve conter o ID `ring`
+-   Opcionalmente ter a propriedade hidden para que o play de audio não seja exibido na tela
+-   `src` deve conter o audio a ser reproduzido
+
+```html
+<audio id="ring" hidden src="../sound/ring.mp3"></audio>
 ```
 
 ### **Config:**
