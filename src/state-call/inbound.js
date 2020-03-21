@@ -1,3 +1,5 @@
+const { Ring } = require('../ring')
+
 const InboundEvents = {
     ring: null,
     early: null,
@@ -9,6 +11,7 @@ const InboundEvents = {
 
 InboundEvents.ring = () => {
     console.log('Ring Inbound')
+    Ring.start()
 }
 
 InboundEvents.early = () => {
@@ -17,6 +20,7 @@ InboundEvents.early = () => {
 
 InboundEvents.answering = () => {
     console.log('Answering Inbound')
+    Ring.end()
 }
 
 InboundEvents.active = () => {
@@ -25,6 +29,7 @@ InboundEvents.active = () => {
 
 InboundEvents.hangup = () => {
     console.log('Hangup Inbound')
+    Ring.end()
 }
 
 InboundEvents.destroy = () => {
