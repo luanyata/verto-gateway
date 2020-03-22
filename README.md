@@ -160,7 +160,7 @@ Para enviar eventos dtmf basta chamar a função `dtmf()` passando um parametro:
 -   Valor a ser passado via DTMF
 
 ```js
-Actions.hangup('valorDTMF')
+Actions.dtmf('valorDTMF')
 ```
 
 **Hangup:**
