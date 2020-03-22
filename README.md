@@ -153,6 +153,16 @@ Para remover a chamada da espera basta chamar a função `unhold()`:
 Actions.unhold()
 ```
 
+**DTMF:**
+
+Para enviar eventos dtmf basta chamar a função `dtmf()` passando um parametro:
+
+-   Valor a ser passado via DTMF
+
+```js
+Actions.hangup('valorDTMF')
+```
+
 **Hangup:**
 
 Para desligar a chamada basta chamar a função `hangup()`:
