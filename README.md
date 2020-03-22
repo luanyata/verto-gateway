@@ -1,8 +1,8 @@
 # Verto-gateway
 
-Biblioteca simplificada para comunicação entre o front-end com o [Freeswith](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) utilizando o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) para realizar audio chamadas, video-chamadas, video-conferencia e troca de mensagem de texto utilizando Websokect e SIP.
+Biblioteca simplificada com base no projeto [VertoJs](https://evoluxbr.github.io/verto-docs/tut/initializing-verto.html) para comunicação entre o front-end com o [Freeswith](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) utilizando o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) para realizar audio chamadas, video-chamadas, video-conferencia e troca de mensagem de texto utilizando Websokect e SIP.
 
-ps.: No momemto apenas audio chamada está implementada
+ps.: No momemto apenas audio chamada está implementada.
 
 ## Instalação:
 
@@ -115,18 +115,58 @@ Actions.call('8888', '9999')
 
 **Answer:**
 
-Para atender a chamada basta chamar a função `answer()`.
+Para atender a chamada basta chamar a função `answer()`:
 
 ```js
 Actions.answer()
 ```
 
+**Mute:**
+
+Para por seu microfone no mudo basta chamar a função `mute()`:
+
+```js
+Actions.mute()
+```
+
+**Unmute:**
+
+Para retirar seu microfone do mute basta chamar a função `unmute()`:
+
+```js
+Actions.unmute()
+```
+
+**Hold:**
+
+Para por a chamada em espera basta chamar a função `hold()`:
+
+```js
+Actions.hold()
+```
+
+**Unhold:**
+
+Para remover a chamada da espera basta chamar a função `unhold()`:
+
+```js
+Actions.unhold()
+```
+
 **Hangup:**
 
-Para desligar a chamada basta chamar a função `hangup()`.
+Para desligar a chamada basta chamar a função `hangup()`:
 
 ```js
 Actions.hangup()
+```
+
+**Logout:**
+
+Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conexão com o socket será finalizada:
+
+```js
+Actions.logout()
 ```
 
 ## License
