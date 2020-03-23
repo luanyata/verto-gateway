@@ -1,9 +1,10 @@
+const { Events } = require('../events')
 const { vertoHandle } = require('../config')
 const { keyStorage } = require('../storage')
-const { Events } = require('../events')
 
 const BandWidthTest = () => {
     const bytesToSendAndReceive = 1024 * 256
+
     vertoHandle.rpcClient.speedTest(bytesToSendAndReceive, (event, data) => {
         const upBand = Math.ceil(data.upKPS)
         const downBand = Math.ceil(data.downKPS)

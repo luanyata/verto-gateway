@@ -1,21 +1,16 @@
-const $ = require('verto/src/jquery.verto')
-const { WsEvent } = require('../enums')
-const { StateCall } = require('../state_call')
-const { InboundEvents } = require('../state_call/inbound')
-const { OutBoundEvents } = require('../state_call/outbound')
+const { Context } = require('../models')
+const { Events } = require('../events')
+const { InboundEvents, OutboundEvents } = require('../state-call')
+const { StateCall } = require('../enums')
+const { WsException } = require('../ws-exceptions')
 
-const Config = {
-    bootstrap: null,
-    start: null,
-}
+let HandleVerto = null
 
-const HandleVerto = null
-
-Config.start = start = data => {
+const start = data => {
     $.verto.init({}, bootstrap(data))
 }
 
-Config.bootstrap = bootstrap = data => {
+const bootstrap = data => {
     const { agent, wssAddress, wsFallbackURL, tag, useIce } = data
 
     const callbacks = {
@@ -51,21 +46,23 @@ Config.bootstrap = bootstrap = data => {
         },
         callbacks
     )
+
+    Events.handleVerto.emit('handleVerto', HandleVerto)
 }
 
-onWSLogin = (verto, success) => {
+const onWSLogin = (verto, success) => {
     console.log('onWSLogin', success)
 }
 
-onWSClose = (verto, success) => {
+const onWSClose = (verto, success) => {
     console.log('onWSClose', success)
 }
 
-onWSConnect = (verto, success) => {
+const onWSConnect = (verto, success) => {
     console.log('onWSConnect', success)
 }
 
-onDialogState = d => {
+const onDialogState = d => {
     const {
         INBOUND,
         TRYING,
@@ -77,17 +74,16 @@ onDialogState = d => {
         HOLD,
         HANGUP,
         DESTROY,
-        context,
     } = StateCall
 
-    if (!context.currentCall) {
-        context.currentCall = d
+    if (!Context.currentCall) {
+        Context.currentCall = d
     }
 
     if (
-        context.inCourse &&
+        Context.inCourse &&
         d.direction.name === INBOUND &&
-        context.currentCall.callID !== d.callID
+        Context.currentCall.callID !== d.callID
     ) {
         d.hangup()
         return
@@ -96,113 +92,104 @@ onDialogState = d => {
 
     switch (d.state.name) {
         case TRYING:
-            eventVerto(direction, null, OutBoundEvents.tryingOutbound, d)
+            eventVerto(direction, null, OutboundEvents.trying, d)
             break
         case RINGING:
-            eventVerto(direction, InboundEvents.ringingInbound, null, d)
+            eventVerto(direction, InboundEvents.ring, null, d)
             break
         case EARLY:
-            eventVerto(
-                direction,
-                InboundEvents.earlyInbound,
-                OutBoundEvents.earlyOutBound,
-                d
-            )
+            eventVerto(direction, InboundEvents.early, OutboundEvents.early, d)
             break
         case ANSWERING:
             eventVerto(
                 direction,
-                InboundEvents.answeringInbound,
-                OutBoundEvents.answeringOutBound,
+                InboundEvents.answering,
+                OutboundEvents.answering,
                 d
             )
             break
         case RECOVERING:
         case ACTIVE:
         case HOLD:
-            eventVerto(
-                direction,
-                InboundEvents.activeInbound,
-                OutBoundEvents.activeOutbound
-            )
+            eventVerto(direction, InboundEvents.active, OutboundEvents.active)
             break
         case HANGUP:
             eventVerto(
                 direction,
-                InboundEvents.hangupInbound,
-                OutBoundEvents.hangupOutbound,
+                InboundEvents.hangup,
+                OutboundEvents.hangup,
                 d
             )
             break
         case DESTROY:
-            eventVerto(
-                direction,
-                InboundEvents.destroyInbound,
-                OutBoundEvents.destroyOutbound
-            )
+            eventVerto(direction, InboundEvents.destroy, OutboundEvents.destroy)
             break
     }
 }
 
-onWSException = e => {
+const onWSException = e => {
     let reason = ''
     switch (e) {
         case 1000:
-            reason = WsEvent.CLOSE_NORMAL
+            reason = WsException.CLOSE_NORMAL
             break
         case 1001:
-            reason = WsEvent.CLOSE_GOING_AWAY
+            reason = WsException.CLOSE_GOING_AWAY
             break
         case 1002:
-            reason = WsEvent.CLOSE_PROTOCOL_ERROR
+            reason = WsException.CLOSE_PROTOCOL_ERROR
             break
         case 1003:
-            reason = WsEvent.CLOSE_UNSUPPORTED
+            reason = WsException.CLOSE_UNSUPPORTED
             break
         case 1005:
-            reason = WsEvent.CLOSE_NO_STATUS
+            reason = WsException.CLOSE_NO_STATUS
             break
         case 1006:
-            reason = WsEvent.CLOSE_ABNORMAL
+            reason = WsException.CLOSE_ABNORMAL
             break
         case 1007:
-            reason = WsEvent.UNSUPPORTED_DATA
+            reason = WsException.UNSUPPORTED_DATA
             break
         case 1008:
-            reason = WsEvent.POLICY_VIOLATION
+            reason = WsException.POLICY_VIOLATION
             break
         case 1009:
-            reason = WsEvent.CLOSE_TOO_LARGE
+            reason = WsException.CLOSE_TOO_LARGE
             break
         case 1010:
-            reason = WsEvent.MISSING_EXTENSION
+            reason = WsException.MISSING_EXTENSION
             break
         case 1011:
-            reason = WsEvent.INTERNAL_ERROR
+            reason = WsException.INTERNAL_ERROR
             break
         case 1012:
-            reason = WsEvent.SERVICE_RESTART
+            reason = WsException.SERVICE_RESTART
             break
         case 1013:
-            reason = WsEvent.TRY_AGAIN_LATER
+            reason = WsException.TRY_AGAIN_LATER
             break
         case 1015:
-            reason = WsEvent.TLS_HANDSHAKE
+            reason = WsException.TLS_HANDSHAKE
             break
         default:
-            reason = WsEvent.DEFAULT_STATUS
+            reason = WsException.DEFAULT_STATUS
     }
 }
 
 const eventVerto = (
     direction,
-    InboundEventsbound,
-    OutBoundEventsbound,
+    InboundEvents,
+    OutboundEvents,
     dialog = null
 ) => {
     direction === StateCall.INBOUND
-        ? InboundEventsbound(dialog)
-        : OutBoundEventsbound(dialog)
+        ? InboundEvents(dialog)
+        : OutboundEvents(dialog)
 }
 
-module.exports = { HandleVerto, Config }
+const Config = {
+    start,
+}
+
+module.exports = { Config }

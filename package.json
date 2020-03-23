@@ -1,31 +1,55 @@
 {
-  "name": "verto-gateway",
-  "version": "1.0.0",
-  "description": "Conecta o front-end ao Freeswitch utilizando o mod_verto",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/luanyata/verto-gateway.git"
-  },
-  "keywords": [],
-  "author": "Luan Lima <luanyata@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/luanyata/verto-gateway/issues"
-  },
-  "homepage": "https://github.com/luanyata/verto-gateway#readme",
-  "dependencies": {
-    "events": "^3.1.0",
-    "jquery": "^3.4.1",
-    "jquery-json": "^2.6.0",
-    "verto": "git+https://github.com/luanyata/Verto.git"
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.20.1"
-  }
+    "name": "verto-gateway",
+    "version": "0.0.1",
+    "main": "index.js",
+    "description": "Biblioteca para simplificar a comunicação entro o front-end com o [Freeswith](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) utilizando o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) para realizar audio chamadas, video-chamadas, video-conferencia e troca de mensagem de texto utilizando Websokect e SIP.",
+    "scripts": {
+        "release": "standard-version"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-emoji"
+        }
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commintlint -E HUSKY_GIT_PARAMS"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/luanyata/verto-gateway.git"
+    },
+    "keywords": [
+        "verto",
+        "websocket",
+        "sip",
+        "telecom",
+        "sippulse"
+    ],
+    "author": "Luan Lima <luanyata@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/luanyata/verto-gateway/issues"
+    },
+    "homepage": "https://github.com/luanyata/verto-gateway#readme",
+    "dependencies": {
+        "events": "^3.1.0",
+        "jquery": "^3.4.1",
+        "jquery-json": "^2.6.0",
+        "verto": "git+https://github.com/luanyata/Verto.git"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-conventional": "^8.3.4",
+        "acorn": "^7.1.1",
+        "cz-conventional-changelog": "^3.1.0",
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-plugin-import": "^2.20.1",
+        "husky": "^4.2.3",
+        "mkdirp": "^1.0.3",
+        "standard-version": "^7.1.0",
+        "minimist": ">=1.2.2"
+    }
 }

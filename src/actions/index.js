@@ -1,11 +1,14 @@
+const { Events } = require('../events')
+const { Context } = require('../models')
 const { isNullOrUndefinedOrEmpty } = require('../utils')
-const { HandleVerto } = require('../config')
-const { KeyStorage } = require('../storage')
-const { Context } = require('../state_call')
+
+let HandleVerto = null
+
+Events.handleVerto.on('handleVerto', handle => (HandleVerto = handle))
 
 const Actions = {
     call: null,
-    answerCall: null,
+    answer: null,
     dtmf: null,
     hangup: null,
     mute: null,
@@ -15,19 +18,16 @@ const Actions = {
     logout: null,
 }
 
-actions.call = call = destination => {
+Actions.call = (origin, destination) => {
     if (isNullOrUndefinedOrEmpty(destination)) {
-        throw Error('Digite o numero do destinatário')
+        console.warn('Digite o numero do destinatário')
+        return
     }
-
-    const currentUser = sessionStorage
-        .getItem(KeyStorage.EXTENSION)
-        .split('@')[0]
 
     Context.currentCall = HandleVerto.newCall({
         destination_number: destination,
-        caller_id_name: currentUser,
-        caller_id_number: currentUser,
+        caller_id_name: origin,
+        caller_id_number: origin,
         outgoingBandwidth: 'default',
         incomingBandwidth: 'default',
         useStereo: false,
@@ -40,7 +40,7 @@ actions.call = call = destination => {
     })
 }
 
-actions.answerCall = answerCall = () => {
+Actions.answer = () => {
     Context.currentCall.answer({
         outgoingBandwidth: 'default',
         incomingBandwidth: 'default',
@@ -54,18 +54,18 @@ actions.answerCall = answerCall = () => {
     })
 }
 
-actions.dtmf = dtmf = digit => Context.currentCall.dtmf(digit)
+Actions.dtmf = digit => Context.currentCall.dtmf(digit)
 
-actions.hangup = hangup = () => HandleVerto.hangup()
+Actions.hangup = () => HandleVerto.hangup()
 
-actions.mute = mute = () => Context.currentCall.setMute('off')
+Actions.mute = () => Context.currentCall.setMute('off')
 
-actions.unmute = unmute = () => Context.currentCall.setMute('on')
+Actions.unmute = () => Context.currentCall.setMute('on')
 
-actions.hold = hold = () => Context.currentCall.hold()
+Actions.hold = () => Context.currentCall.hold()
 
-actions.unhold = unhold = () => Context.currentCall.unhold()
+Actions.unhold = () => Context.currentCall.unhold()
 
-actions.logout = logout = () => HandleVerto.logout()
+Actions.logout = () => HandleVerto.logout()
 
 module.exports = { Actions }
