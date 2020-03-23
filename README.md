@@ -9,7 +9,7 @@ ps.: No momemto apenas audio chamada está implementada.
 O projeto ainda se encontro em processo de desenvolvimento por isso ainda não publicado no NPM. Para usar você deverá puxar a lib do github. Para isso basta adicionar a linha abaixo no seu `package.json`:
 
 ```json
-"verto-gateway": "git+https://github.com/luanyata/verto-gateway.git#dev"
+"verto-gateway": "git+https://github.com/luanyata/verto-gateway.git"
 ```
 
 Em seguida realize a instalação do mesmo com seu gerenciar de pacotes:
