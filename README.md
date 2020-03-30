@@ -4,13 +4,13 @@ Biblioteca simplificada com base no projeto [VertoJs](https://evoluxbr.github.io
 
 ps.: No momemto apenas audio chamada está implementada.
 
--   [Instalação](#install)
+-   [Instalação](#instalação)
     -   [NPM](#npm)
     -   [Yarn](#yarn)
-    -   [Carregando Dependências](#loadDependence)
+    -   [Carregando Dependências](#carregar-denpendências)
 -   [API](#api)
-    -   [Tag Audio](#tagAudio)
--   [Config]("#config")
+    -   [Tag Audio](#tags-audio)
+-   [Config](#config)
     -   [Start](#start)
 -   [Actions](#actions)
     -   [Call](#call)
@@ -22,10 +22,10 @@ ps.: No momemto apenas audio chamada está implementada.
     -   [DTMF](#dtmf)
     -   [Hangup](#hangup)
     -   [Logout](#logout)
--   [State Websocket](#stateWS)
--   [Licença](#license)
+-   [State Websocket](#state-websocket)
+-   [Licença](#licença)
 
-## [Instalação:](#install)
+## Instalação:
 
 O projeto ainda se encontro em processo de desenvolvimento por isso ainda não publicado no NPM. Para usar você deverá puxar a lib do github. Para isso basta adicionar a linha abaixo no seu `package.json`:
 
@@ -35,19 +35,23 @@ O projeto ainda se encontro em processo de desenvolvimento por isso ainda não p
 
 Em seguida realize a instalação do mesmo com seu gerenciar de pacotes:
 
-[**NPM**:](#npm)
+### **NPM**:
 
 ```shell
 npm install
 ```
 
-[**YARN**:](#yarn)
+ou
+
+### **YARN**:
 
 ```shell
 yarn install
 ```
 
-Agora [carregue os javascripts](#loadDependence) no seu HTML antes dos seus javascript:
+### **Carregar Denpendências**:
+
+Agora carregue os javascripts no seu HTML antes dos seus javascript:
 
 ```html
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
@@ -57,9 +61,9 @@ Agora [carregue os javascripts](#loadDependence) no seu HTML antes dos seus java
 <script src="../node_modules/verto/src/jquery.jsonrpcclient.js"></script>
 ```
 
-## [API:](#api)
+## API:
 
-### [**Tags Audio:**](#tagAudio)
+### **Tags Audio:**
 
 Para que o audio das chamadas sejam executada, é necessario a criação da `tag audio` seguindo algumas recomendações:
 
@@ -81,9 +85,9 @@ Para que o ramal que recebe a chamada sinalize que está tocando deve ser criada
 <audio id="ring" hidden src="../sound/ring.mp3"></audio>
 ```
 
-### [**Config**](#config):
+### **Config**:
 
-[**Start:**](#start)
+#### **Start:**
 
 Resposavel por registrar o ramal
 
@@ -115,7 +119,7 @@ Config.start('parametro')
 };
 ```
 
-### [**Actions**:](#actions)
+### **Actions**:
 
 Contem todas as ações que podem ser feitas na chamada:
 
@@ -123,7 +127,7 @@ Contem todas as ações que podem ser feitas na chamada:
 import { Actions } from 'verto-gateway'
 ```
 
-[**Call:**](#call)
+#### **Call:**
 
 Para realizar uma chamada basta chamar a função `call()` parando dois parametro:
 
@@ -134,7 +138,7 @@ Para realizar uma chamada basta chamar a função `call()` parando dois parametr
 Actions.call('8888', '9999')
 ```
 
-[**Answer:**](#answer)
+#### **Answer:**
 
 Para atender a chamada basta chamar a função `answer()`:
 
@@ -142,7 +146,7 @@ Para atender a chamada basta chamar a função `answer()`:
 Actions.answer()
 ```
 
-[**Mute:**](#mute)
+#### **Mute:**
 
 Para por seu microfone no mudo basta chamar a função `mute()`:
 
@@ -150,7 +154,7 @@ Para por seu microfone no mudo basta chamar a função `mute()`:
 Actions.mute()
 ```
 
-[**Unmute:**](#unmute)
+#### **Unmute:**
 
 Para retirar seu microfone do mute basta chamar a função `unmute()`:
 
@@ -158,7 +162,7 @@ Para retirar seu microfone do mute basta chamar a função `unmute()`:
 Actions.unmute()
 ```
 
-[**Hold:**](#hold)
+#### **Hold:**
 
 Para por a chamada em espera basta chamar a função `hold()`:
 
@@ -166,7 +170,7 @@ Para por a chamada em espera basta chamar a função `hold()`:
 Actions.hold()
 ```
 
-[**Unhold:**](#unhold)
+#### **Unhold:**
 
 Para remover a chamada da espera basta chamar a função `unhold()`:
 
@@ -174,7 +178,7 @@ Para remover a chamada da espera basta chamar a função `unhold()`:
 Actions.unhold()
 ```
 
-[**DTMF:**](#dtmf)
+#### **DTMF:**
 
 Para enviar eventos dtmf basta chamar a função `dtmf()` passando um parametro:
 
@@ -184,7 +188,7 @@ Para enviar eventos dtmf basta chamar a função `dtmf()` passando um parametro:
 Actions.dtmf('valorDTMF')
 ```
 
-[**Hangup:**](#hangup)
+#### **Hangup:**
 
 Para desligar a chamada basta chamar a função `hangup()`:
 
@@ -192,7 +196,7 @@ Para desligar a chamada basta chamar a função `hangup()`:
 Actions.hangup()
 ```
 
-[**Logout:**](#logout)
+#### **Logout:**
 
 Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conexão com o socket será finalizada:
 
@@ -200,7 +204,7 @@ Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conex
 Actions.logout()
 ```
 
-### [**State Websocket**:](#stateWS)
+### **State Websocket:**
 
 Você receberá o estado do websocket através do emissor de evento `handleWsState` com a classificação `wsState`.
 
@@ -216,6 +220,8 @@ Exitem tipos de 3 estados:
 -   connect
 -   close
 
-## [Licença](#license)
+## Licença
 
-MIT
+[MIT License](LICENSE)
+
+Copyright (c) 2020 Luan Lima
