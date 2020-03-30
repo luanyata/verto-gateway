@@ -179,6 +179,22 @@ Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conex
 Actions.logout()
 ```
 
+### **Status Websocket**:
+
+Você receberá o estado do websocket através do emissor de evento `handleWsState` com a classificação `wsState`.
+
+```javascript
+import { Events } from 'verto-gateway'
+
+Events.handleWsState.on('wsState', state => {...} )
+```
+
+Exitem tipos de 3 estados:
+
+-   login
+-   connect
+-   close
+
 ## License
 
 MIT
