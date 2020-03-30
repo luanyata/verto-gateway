@@ -4,6 +4,27 @@ Biblioteca simplificada com base no projeto [VertoJs](https://evoluxbr.github.io
 
 ps.: No momemto apenas audio chamada está implementada.
 
+-   [Instalação](#instalação)
+    -   [NPM](#npm)
+    -   [Yarn](#yarn)
+    -   [Carregando Dependências](#carregar-denpendências)
+-   [API](#api)
+    -   [Tag Audio](#tags-audio)
+-   [Config](#config)
+    -   [Start](#start)
+-   [Actions](#actions)
+    -   [Call](#call)
+    -   [Answer](#answer)
+    -   [Mute](#mute)
+    -   [Unmute](#unmute)
+    -   [Hold](#hold)
+    -   [Unhold](#unhold)
+    -   [DTMF](#dtmf)
+    -   [Hangup](#hangup)
+    -   [Logout](#logout)
+-   [State Websocket](#state-websocket)
+-   [Licença](#licença)
+
 ## Instalação:
 
 O projeto ainda se encontro em processo de desenvolvimento por isso ainda não publicado no NPM. Para usar você deverá puxar a lib do github. Para isso basta adicionar a linha abaixo no seu `package.json`:
@@ -14,17 +35,21 @@ O projeto ainda se encontro em processo de desenvolvimento por isso ainda não p
 
 Em seguida realize a instalação do mesmo com seu gerenciar de pacotes:
 
-**NPM**:
+### **NPM**:
 
 ```shell
 npm install
 ```
 
-**YARN**:
+ou
+
+### **YARN**:
 
 ```shell
 yarn install
 ```
+
+### **Carregar Denpendências**:
 
 Agora carregue os javascripts no seu HTML antes dos seus javascript:
 
@@ -36,7 +61,7 @@ Agora carregue os javascripts no seu HTML antes dos seus javascript:
 <script src="../node_modules/verto/src/jquery.jsonrpcclient.js"></script>
 ```
 
-## Utilizando
+## API:
 
 ### **Tags Audio:**
 
@@ -60,9 +85,9 @@ Para que o ramal que recebe a chamada sinalize que está tocando deve ser criada
 <audio id="ring" hidden src="../sound/ring.mp3"></audio>
 ```
 
-### **Config:**
+### **Config**:
 
-**Start:**
+#### **Start:**
 
 Resposavel por registrar o ramal
 
@@ -102,7 +127,7 @@ Contem todas as ações que podem ser feitas na chamada:
 import { Actions } from 'verto-gateway'
 ```
 
-**Call:**
+#### **Call:**
 
 Para realizar uma chamada basta chamar a função `call()` parando dois parametro:
 
@@ -113,7 +138,7 @@ Para realizar uma chamada basta chamar a função `call()` parando dois parametr
 Actions.call('8888', '9999')
 ```
 
-**Answer:**
+#### **Answer:**
 
 Para atender a chamada basta chamar a função `answer()`:
 
@@ -121,7 +146,7 @@ Para atender a chamada basta chamar a função `answer()`:
 Actions.answer()
 ```
 
-**Mute:**
+#### **Mute:**
 
 Para por seu microfone no mudo basta chamar a função `mute()`:
 
@@ -129,7 +154,7 @@ Para por seu microfone no mudo basta chamar a função `mute()`:
 Actions.mute()
 ```
 
-**Unmute:**
+#### **Unmute:**
 
 Para retirar seu microfone do mute basta chamar a função `unmute()`:
 
@@ -137,7 +162,7 @@ Para retirar seu microfone do mute basta chamar a função `unmute()`:
 Actions.unmute()
 ```
 
-**Hold:**
+#### **Hold:**
 
 Para por a chamada em espera basta chamar a função `hold()`:
 
@@ -145,7 +170,7 @@ Para por a chamada em espera basta chamar a função `hold()`:
 Actions.hold()
 ```
 
-**Unhold:**
+#### **Unhold:**
 
 Para remover a chamada da espera basta chamar a função `unhold()`:
 
@@ -153,7 +178,7 @@ Para remover a chamada da espera basta chamar a função `unhold()`:
 Actions.unhold()
 ```
 
-**DTMF:**
+#### **DTMF:**
 
 Para enviar eventos dtmf basta chamar a função `dtmf()` passando um parametro:
 
@@ -163,7 +188,7 @@ Para enviar eventos dtmf basta chamar a função `dtmf()` passando um parametro:
 Actions.dtmf('valorDTMF')
 ```
 
-**Hangup:**
+#### **Hangup:**
 
 Para desligar a chamada basta chamar a função `hangup()`:
 
@@ -171,7 +196,7 @@ Para desligar a chamada basta chamar a função `hangup()`:
 Actions.hangup()
 ```
 
-**Logout:**
+#### **Logout:**
 
 Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conexão com o socket será finalizada:
 
@@ -179,6 +204,24 @@ Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conex
 Actions.logout()
 ```
 
-## License
+### **State Websocket:**
 
-MIT
+Você receberá o estado do websocket através do emissor de evento `handleWsState` com a classificação `wsState`.
+
+```javascript
+import { Events } from 'verto-gateway'
+
+Events.handleWsState.on('wsState', state => {...} )
+```
+
+Exitem tipos de 3 estados:
+
+-   login
+-   connect
+-   close
+
+## Licença
+
+[MIT License](LICENSE)
+
+Copyright (c) 2020 Luan Lima

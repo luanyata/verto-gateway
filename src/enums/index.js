@@ -1,3 +1,4 @@
-const { StateCall } = require('./state-call')
+const { CallState } = require('./call-state')
+const { WSState } = require('./ws-state')
 
-module.exports = { StateCall }
+module.exports = { CallState, WSState }

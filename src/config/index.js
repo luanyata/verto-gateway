@@ -1,7 +1,7 @@
 const { Context } = require('../models')
 const { Events } = require('../events')
 const { InboundEvents, OutboundEvents } = require('../state-call')
-const { StateCall } = require('../enums')
+const { CallState,WSState } = require('../enums')
 const { WsException } = require('../ws-exceptions')
 
 let HandleVerto = null
@@ -51,15 +51,15 @@ const bootstrap = data => {
 }
 
 const onWSLogin = (verto, success) => {
-    console.log('onWSLogin', success)
+    Events.handleWsState.emit('wsState', WSState.LOGIN)
 }
 
 const onWSClose = (verto, success) => {
-    console.log('onWSClose', success)
+    Events.handleWsState.emit('wsState', WSState.CLOSE)
 }
 
 const onWSConnect = (verto, success) => {
-    console.log('onWSConnect', success)
+    Events.handleWsState.emit('wsState', WSState.CONNECT)
 }
 
 const onDialogState = d => {
@@ -74,7 +74,7 @@ const onDialogState = d => {
         HOLD,
         HANGUP,
         DESTROY,
-    } = StateCall
+    } = CallState,WSS
 
     if (!Context.currentCall) {
         Context.currentCall = d
@@ -189,7 +189,7 @@ const eventVerto = (
     OutboundEvents,
     dialog = null
 ) => {
-    direction === StateCall.INBOUND
+    direction === CallState,WSS.INBOUND
         ? InboundEvents(dialog)
         : OutboundEvents(dialog)
 }
