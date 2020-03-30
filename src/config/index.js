@@ -78,6 +78,7 @@ const onDialogState = d => {
 
     if (!Context.currentCall) {
         Context.currentCall = d
+        Context.inCourse = true
     }
 
     if (
@@ -122,6 +123,11 @@ const onDialogState = d => {
             )
             break
         case DESTROY:
+            if (Context.currentCall.callID === d.callID) {
+                Context.inCourse = false
+                Context.currentCall = null
+            }
+
             eventVerto(direction, InboundEvents.destroy, OutboundEvents.destroy)
             break
     }
