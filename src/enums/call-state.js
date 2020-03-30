@@ -1,4 +1,4 @@
-const StateCall = {
+const CallState = {
     ACTIVE: 'active',
     ANSWERING: 'answering',
     DESTROY: 'destroy',
@@ -11,4 +11,4 @@ const StateCall = {
     TRYING: 'trying',
 }
 
-module.exports = { StateCall }
+module.exports = { CallState }
