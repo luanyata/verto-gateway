@@ -1,8 +1,12 @@
 # Verto-gateway
 
-Biblioteca simplificada com base no projeto [VertoJs](https://evoluxbr.github.io/verto-docs/tut/initializing-verto.html) para comunicação entre o front-end com o [Freeswith](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) utilizando o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) para realizar audio chamadas, video-chamadas, video-conferencia e troca de mensagem de texto utilizando Websokect e SIP.
+Biblioteca simplificada de comunicação (chamada de audio, audioconferência, videochamada, videoconferência e troca de mensagem de texto) via browser utilizando Websocket e SIP.
 
-ps.: No momemto apenas audio chamada está implementada.
+## Pré-requisito
+
+-   Servidor [Freeswitch](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) configurado com o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) habilitado.
+
+_ps.: No momemto apenas chamada de audio está implementada._
 
 -   [Instalação](#instalação)
     -   [NPM](#npm)
@@ -22,7 +26,9 @@ ps.: No momemto apenas audio chamada está implementada.
     -   [DTMF](#dtmf)
     -   [Hangup](#hangup)
     -   [Logout](#logout)
--   [State Websocket](#state-websocket)
+-   [Eventos](#eventos)
+    -   [Estado Websocket](#estado-websocket)
+    -   [Bina](#bina)
 -   [Licença](#licença)
 
 ## Instalação:
@@ -54,6 +60,8 @@ yarn install
 Agora carregue os javascripts no seu HTML antes dos seus javascript:
 
 ```html
+<script src="../node_modules/verto/src/vendor/adapter-latest.js"></script>
+<script src="../node_modules/verto/src/vendor/media-device-id.min.js"></script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/jquery-json/dist/jquery.json.min.js"></script>
 <script src="../node_modules/verto/src/jquery.verto.js"></script>
@@ -204,7 +212,14 @@ Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conex
 Actions.logout()
 ```
 
-### **State Websocket:**
+### **Eventos:**
+
+Algumas informações que trafegam pelo websocket se dará acesso através de eventos, sendo eles:
+
+-   O estado atual do websocket
+-   Número do telefone de quem está ligando
+
+#### **Estado Websocket**:
 
 Você receberá o estado do websocket através do emissor de evento `handleWsState` com a classificação `wsState`.
 
@@ -214,11 +229,21 @@ import { Events } from 'verto-gateway'
 Events.handleWsState.on('wsState', state => {...} )
 ```
 
-Exitem tipos de 3 estados:
+Existem tipos de 3 estados:
 
 -   login
 -   connect
 -   close
+
+#### **Bina**:
+
+Você receberá o número do telefone que está te ligando através do emissor de evento `handleWsCallState` com a classificação `bina`.
+
+```javascript
+import { Events } from 'verto-gateway'
+
+Events.handleCallState.on('bina', phoneNumber => {...} )
+```
 
 ## Licença
 
