@@ -55,7 +55,7 @@ ou
 yarn install
 ```
 
-### **Carregar Denpendências**:
+### **Carregar Dependências**:
 
 Agora carregue os javascripts no seu HTML antes dos seus javascript:
 
