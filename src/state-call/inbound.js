@@ -1,3 +1,4 @@
+const { Events } = require('../events')
 const { Ring } = require('../ring')
 
 const InboundEvents = {
@@ -9,7 +10,8 @@ const InboundEvents = {
     destroy: null,
 }
 
-InboundEvents.ring = () => {
+InboundEvents.ring = ({ params }) => {
+    Events.handleCallState.emit('bina', params.caller_id_number)
     console.log('Ring Inbound')
     Ring.start()
 }

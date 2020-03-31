@@ -1,8 +1,8 @@
 {
     "name": "verto-gateway",
-    "version": "0.0.1",
+    "version": "0.3.0",
     "main": "index.js",
-    "description": "Biblioteca para simplificar a comunicação entro o front-end com o [Freeswith](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) utilizando o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) para realizar audio chamadas, video-chamadas, video-conferencia e troca de mensagem de texto utilizando Websokect e SIP.",
+    "description": "Biblioteca de comunicação (chamada de audio, audioconferência, videochamada, videoconferência e troca de mensagem de texto) via browser utilizando Websocket e SIP",
     "scripts": {
         "release": "standard-version"
     },
