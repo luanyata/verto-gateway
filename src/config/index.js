@@ -189,8 +189,9 @@ const eventVerto = (
     OutboundEvents,
     dialog = null
 ) => {
-    direction === CallState,
-        WSS.INBOUND ? InboundEvents(dialog) : OutboundEvents(dialog)
+    direction === CallState.INBOUND
+        ? InboundEvents(dialog)
+        : OutboundEvents(dialog)
 }
 
 const Config = {
