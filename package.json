@@ -46,7 +46,7 @@
         "husky": "^4.2.3",
         "minimist": ">=1.2.2",
         "mkdirp": "^1.0.3",
-        "standard-version": "^7.1.0",
+        "standard-version": "^8.0.1",
         "mem": ">=4.0.0"
     }
 }
