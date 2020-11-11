@@ -35,8 +35,8 @@
         "verto": "git+https://github.com/luanyata/Verto.git"
     },
     "devDependencies": {
-        "@commitlint/cli": "^8.3.5",
-        "@commitlint/config-conventional": "^8.3.4",
+        "@commitlint/cli": "^11.0.0",
+        "@commitlint/config-conventional": "^11.0.0",
         "acorn": "^7.1.1",
         "cz-conventional-changelog": "^3.1.0",
         "cz-emoji": "^1.2.1",
@@ -44,9 +44,9 @@
         "eslint-config-airbnb-base": "^14.0.0",
         "eslint-plugin-import": "^2.20.1",
         "husky": "^4.2.3",
+        "mem": ">=4.0.0",
         "minimist": ">=1.2.2",
         "mkdirp": "^1.0.3",
-        "standard-version": "^7.1.0",
-        "mem": ">=4.0.0"
+        "standard-version": "^9.0.0"
     }
 }

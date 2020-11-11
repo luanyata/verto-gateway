@@ -68,7 +68,6 @@ const onDialogState = d => {
         TRYING,
         RINGING,
         RECOVERING,
-        EARLY,
         ANSWERING,
         ACTIVE,
         HOLD,
@@ -78,7 +77,6 @@ const onDialogState = d => {
 
     if (!Context.currentCall) {
         Context.currentCall = d
-        Context.inCourse = true
     }
 
     if (
@@ -96,18 +94,10 @@ const onDialogState = d => {
             eventVerto(direction, null, OutboundEvents.trying, d)
             break
         case RINGING:
-            eventVerto(direction, InboundEvents.ring, null, d)
-            break
-        case EARLY:
-            eventVerto(direction, InboundEvents.early, OutboundEvents.early, d)
+            eventVerto(direction, InboundEvents.ring, null, { call: d, autoAnswer: !!localStorage.getItem('autoAnswer') })
             break
         case ANSWERING:
-            eventVerto(
-                direction,
-                InboundEvents.answering,
-                OutboundEvents.answering,
-                d
-            )
+            eventVerto(direction, InboundEvents.answering, null, d)
             break
         case RECOVERING:
         case ACTIVE:
@@ -115,19 +105,9 @@ const onDialogState = d => {
             eventVerto(direction, InboundEvents.active, OutboundEvents.active)
             break
         case HANGUP:
-            eventVerto(
-                direction,
-                InboundEvents.hangup,
-                OutboundEvents.hangup,
-                d
-            )
+            eventVerto(direction, InboundEvents.hangup, OutboundEvents.hangup, d)
             break
         case DESTROY:
-            if (Context.currentCall.callID === d.callID) {
-                Context.inCourse = false
-                Context.currentCall = null
-            }
-
             eventVerto(direction, InboundEvents.destroy, OutboundEvents.destroy)
             break
     }
@@ -198,4 +178,4 @@ const Config = {
     start,
 }
 
-module.exports = { Config }
+module.exports = { Config, HandleVerto }
