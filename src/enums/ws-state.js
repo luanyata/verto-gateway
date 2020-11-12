@@ -1,7 +1,7 @@
 const WSState = {
-  LOGIN: 'login',
+  LOGGED: 'logged',
   CLOSE: 'close',
-  FAIL_LOGIN: 'failLogin',
+  FAILED_LOGIN: 'failed-login',
   CONNECT: 'connect',
 };
 

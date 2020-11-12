@@ -56,9 +56,9 @@ const bootstrap = (data) => {
 const onWSLogin = (_, success) => {
   if (success) {
     refSetInverval = setInterval(KeepAlive, 5000);
-    Events.handleWsState.emit('wsState', WSState.LOGIN);
+    Events.handleWsState.emit('wsState', WSState.LOGGED);
   } else {
-    Events.handleWsState.emit('wsState', WSState.FAIL_LOGIN);
+    Events.handleWsState.emit('wsState', WSState.FAILED_LOGIN);
   }
 };
 

@@ -4,32 +4,34 @@ Biblioteca simplificada de comunicação (chamada de audio, audioconferência, v
 
 ## Pré-requisito
 
--   Servidor [Freeswitch](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) configurado com o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) habilitado.
+- Servidor [Freeswitch](https://freeswitch.org/confluence/display/FREESWITCH/Introduction) configurado com o [mod_verto](https://freeswitch.org/confluence/display/FREESWITCH/mod_verto) habilitado.
 
 _ps.: No momemto apenas chamada de audio está implementada._
 
--   [Instalação](#instalação)
-    -   [NPM](#npm)
-    -   [Yarn](#yarn)
-    -   [Carregando Dependências](#carregar-denpendências)
--   [API](#api)
-    -   [Tag Audio](#tags-audio)
--   [Config](#config)
-    -   [Start](#start)
--   [Actions](#actions)
-    -   [Call](#call)
-    -   [Answer](#answer)
-    -   [Mute](#mute)
-    -   [Unmute](#unmute)
-    -   [Hold](#hold)
-    -   [Unhold](#unhold)
-    -   [DTMF](#dtmf)
-    -   [Hangup](#hangup)
-    -   [Logout](#logout)
--   [Eventos](#eventos)
-    -   [Estado Websocket](#estado-websocket)
-    -   [Bina](#bina)
--   [Licença](#licença)
+- [Instalação](#instalação)
+  - [NPM](#npm)
+  - [Yarn](#yarn)
+  - [Carregando Dependências](#carregar-denpendências)
+- [API](#api)
+  - [Tag Audio](#tags-audio)
+- [Config](#config)
+  - [Start](#start)
+- [Actions](#actions)
+  - [Call](#call)
+  - [Answer](#answer)
+  - [Mute](#mute)
+  - [Unmute](#unmute)
+  - [Hold](#hold)
+  - [Unhold](#unhold)
+  - [DTMF](#dtmf)
+  - [Hangup](#hangup)
+  - [Logout](#logout)
+  - [Auto Atendimento](#auto-atendimento)
+- [Eventos](#eventos)
+  - [Estados do Ramal](#estados-do-ramal)
+  - [Estados da Chamada](#estados-da-chamada)
+  - [Bina](#bina)
+- [Licença](#licença)
 
 ## Instalação:
 
@@ -75,9 +77,9 @@ Agora carregue os javascripts no seu HTML antes dos seus javascript:
 
 Para que o audio das chamadas sejam executada, é necessario a criação da `tag audio` seguindo algumas recomendações:
 
--   Deve conter um ID que será utilizado na configuração para reporduzir o audio da chamada
--   Deve ter a propriedade autoplay
--   Opcionalmente ter a propriedade hidden para que o play de audio não seja exibido na tela
+- Deve conter um ID que será utilizado na configuração para reporduzir o audio da chamada
+- Deve ter a propriedade autoplay
+- Opcionalmente ter a propriedade hidden para que o play de audio não seja exibido na tela
 
 ```html
 <audio id="call" hidden autoplay></audio>
@@ -85,9 +87,9 @@ Para que o audio das chamadas sejam executada, é necessario a criação da `tag
 
 Para que o ramal que recebe a chamada sinalize que está tocando deve ser criada uma `tag audio` seguindo algumas recomendações:
 
--   Obrigatoriamente deve conter o ID `ring`
--   Opcionalmente ter a propriedade hidden para que o play de audio não seja exibido na tela
--   `src` deve conter o audio a ser reproduzido
+- Obrigatoriamente deve conter o ID `ring`
+- Opcionalmente ter a propriedade hidden para que o play de audio não seja exibido na tela
+- `src` deve conter o audio a ser reproduzido
 
 ```html
 <audio id="ring" hidden src="../sound/ring.mp3"></audio>
@@ -100,20 +102,20 @@ Para que o ramal que recebe a chamada sinalize que está tocando deve ser criada
 Resposavel por registrar o ramal
 
 ```javascript
-import { Config } from 'verto-gateway'
+import { Config } from 'verto-gateway';
 
-Config.start('parametro')
+Config.start('parametro');
 ```
 
 **Parametros**:
 
--   agent
-    -   login: usuário do ramal
-    -   passwd: senha do ramal
--   wssAddress: endereço do servidor wss
--   wsFallbackURL: array de string contendo os endereços de outros servidores wss para ser acionados em casos de falha. Caso nao tenha o valor pode ser omnitido
--   useIce: booleano passando `true` será utilizado o stun do freeswitch `stun:stun.freeswitch.org`
--   tag: id da tag audio que será necessaria para reproduzir o audio da chamada
+- agent
+  - login: usuário do ramal
+  - passwd: senha do ramal
+- wssAddress: endereço do servidor wss
+- wsFallbackURL: array de string contendo os endereços de outros servidores wss para ser acionados em casos de falha. Caso nao tenha o valor pode ser omnitido
+- useIce: booleano passando `true` será utilizado o stun do freeswitch `stun:stun.freeswitch.org`
+- tag: id da tag audio que será necessaria para reproduzir o audio da chamada
 
 **Exemplo Objeto Final:**
 
@@ -132,18 +134,18 @@ Config.start('parametro')
 Contem todas as ações que podem ser feitas na chamada:
 
 ```javascript
-import { Actions } from 'verto-gateway'
+import { Actions } from 'verto-gateway';
 ```
 
 #### **Call:**
 
 Para realizar uma chamada basta chamar a função `call()` parando dois parametro:
 
--   Número origin
--   Número destino
+- Número origin
+- Número destino
 
 ```js
-Actions.call('8888', '9999')
+Actions.call('8888', '9999');
 ```
 
 #### **Answer:**
@@ -151,7 +153,7 @@ Actions.call('8888', '9999')
 Para atender a chamada basta chamar a função `answer()`:
 
 ```js
-Actions.answer()
+Actions.answer();
 ```
 
 #### **Mute:**
@@ -159,7 +161,7 @@ Actions.answer()
 Para por seu microfone no mudo basta chamar a função `mute()`:
 
 ```js
-Actions.mute()
+Actions.mute();
 ```
 
 #### **Unmute:**
@@ -167,7 +169,7 @@ Actions.mute()
 Para retirar seu microfone do mute basta chamar a função `unmute()`:
 
 ```js
-Actions.unmute()
+Actions.unmute();
 ```
 
 #### **Hold:**
@@ -175,7 +177,7 @@ Actions.unmute()
 Para por a chamada em espera basta chamar a função `hold()`:
 
 ```js
-Actions.hold()
+Actions.hold();
 ```
 
 #### **Unhold:**
@@ -183,17 +185,17 @@ Actions.hold()
 Para remover a chamada da espera basta chamar a função `unhold()`:
 
 ```js
-Actions.unhold()
+Actions.unhold();
 ```
 
 #### **DTMF:**
 
 Para enviar eventos dtmf basta chamar a função `dtmf()` passando um parametro:
 
--   Valor a ser passado via DTMF
+- Valor a ser passado via DTMF
 
 ```js
-Actions.dtmf('valorDTMF')
+Actions.dtmf('valorDTMF');
 ```
 
 #### **Hangup:**
@@ -201,7 +203,7 @@ Actions.dtmf('valorDTMF')
 Para desligar a chamada basta chamar a função `hangup()`:
 
 ```js
-Actions.hangup()
+Actions.hangup();
 ```
 
 #### **Logout:**
@@ -209,19 +211,24 @@ Actions.hangup()
 Para desregistrar o ramal basta chamar a função `logout()`. Com isso o a conexão com o socket será finalizada:
 
 ```js
-Actions.logout()
+Actions.logout();
 ```
+
+### **Auto Atendimento:**
+
+Para poder utilizar a função de auto atendimento basta adicionar adicionar a chave `autoAnswer` com o valor `true` no `localStorage`.
 
 ### **Eventos:**
 
 Algumas informações que trafegam pelo websocket se dará acesso através de eventos, sendo eles:
 
--   O estado atual do websocket
--   Número do telefone de quem está ligando
+- O estado atual do ramal
+- Número do telefone de quem está ligando
+- Estado da chamada
 
-#### **Estado Websocket**:
+#### **Estados do Ramal**:
 
-Você receberá o estado do websocket através do emissor de evento `handleWsState` com a classificação `wsState`.
+Você receberá o estado do ramal através do emissor de evento `handleWsState` com a classificação `wsState`.
 
 ```javascript
 import { Events } from 'verto-gateway'
@@ -229,21 +236,132 @@ import { Events } from 'verto-gateway'
 Events.handleWsState.on('wsState', state => {...} )
 ```
 
-Existem tipos de 3 estados:
+Existem tipos de 2 estados:
 
--   login
--   connect
--   close
+- Registrar o Ramal: Indica se o ramal efetuou ou não o registro com sucesso
+  - retorna as strings `logged` ou `failed-login` respectivamente.
+- Desregistar o ramal:
+  - retorna a string `close` quando o ramal realizar o logout no Freeswitch.
 
-#### **Bina**:
+#### **Estados da Chamada**
 
-Você receberá o número do telefone que está te ligando através do emissor de evento `handleWsCallState` com a classificação `bina`.
+Em uma chamada existem dois tipos de eventos Inbound e Outbound. Em cada um dos estados do tipo da chamada uma serie de eventos são disparados utilizando o emissor `Events.handleCallState`.
 
 ```javascript
 import { Events } from 'verto-gateway'
 
-Events.handleCallState.on('bina', phoneNumber => {...} )
+Events.handleCallState.on('EVENTO_ID', phoneNumber => {...} )
 ```
+
+#### **Chamada Entrante - Inbound:**
+
+- **Estado Ring**:
+
+  - Evento ID `BINA`:
+
+  ```text
+  - Envia o número de quem está ligando.
+  - Tipo: String
+  ```
+
+  - Evento ID `RECEIVE_CALL`:
+
+  ```text
+  - Envia o objeto verto contendo a conversa.
+  - Tipo: Object
+  ```
+
+- **Estado Answering**:
+
+  - Evento ID `ANSWERING`
+
+  ```text
+  - Informando que o ramal está enviando a resposta para estabelecer a comunicação.
+  - Tipo: Boolean
+  - Valor: true
+  ```
+
+- **Estado Active**:
+
+  - Evento ID `INBOUND_ACTIVE`:
+
+  ```text
+  - Informa que a comunicação foi estabelecida entre aos ramais e está em conversação.
+  - Tipo: Boolean
+  - Valor: true
+  ```
+
+- **Estado Hangup**:
+
+  - Evento ID `INBOUND_HANGUP_CAUSE`:
+
+  ```text
+  - Informa o motivo do desligamento da chamada.
+  - Tipo: String
+  ```
+
+  _ps.: Todos os motivos dos possiveis desligamentos podem ser obtidos na [documentação do Freeswitch](https://freeswitch.org/confluence/display/FREESWITCH/Hangup+Cause+Code+Table)_
+
+- **Estado Destroy**
+
+  - Evento ID `INBOUND_ACTIVE`:
+
+  ```text
+  - Informando que a chamada foi desligada.
+  - Tipo: Boolean
+  - Valor: false
+  ```
+
+  - Evento ID `ANSWERING`:
+
+  ```text
+  - Reinicia o estado da solicitação da comunicação.
+  - Tipo: Boolean
+  - Valor: false
+  ```
+
+#### **Chamada Sainte - Outbound:**
+
+- **Estado Trying**
+
+  - Evento ID `TRYNG`:
+
+  ```text
+  - Informa que está tentando/chamando o número destino
+  - Tipo: Boolean
+  - Valor: true
+  ```
+
+- **Estado Active**
+
+  - Evento ID `OUTBOUND_ACTIVE`:
+
+  ```text
+  - Informa que a comunicação foi estabelecida entre aos ramais e está em conversação.
+  - Tipo: Boolean
+  - Valor: true
+  ```
+
+- **Estado Hangup**:
+
+  - Evento ID `OUTBOUND_HANGUP_CAUSE`:
+
+  ```text
+  - Informa o motivo do desligamento da chamada.
+  - Tipo: String
+  ```
+
+  _ps.: Todos os motivos dos possiveis desligamentos podem ser obtidos na [documentação do Freeswitch](https://freeswitch.org/confluence/display/FREESWITCH/Hangup+Cause+Code+Table)_
+
+* **Estado Destroy**
+
+  - Evento ID `INBOUND_ACTIVE`:
+
+  ```text
+  - Informa que os ramais não estão mais ativos para a chamada que estava acontecendo.
+  - Tipo: Boolean
+  - Valor: false
+  ```
 
 ## Licença
 
