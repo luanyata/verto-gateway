@@ -1,77 +1,75 @@
-const { Events } = require('../events')
-const { Ring } = require('../ring')
-const { Context } = require('../store')
-const { HandleVerto } = require('../config')
+const Events = require('../events');
+const Ring = require('../ring');
+const Store = require('../store');
 
 const callIds = [];
 
 const InboundEvents = {
-    ring: null,
-    answering: null,
-    active: null,
-    hangup: null,
-    destroy: null,
-}
+  ring: null,
+  answering: null,
+  active: null,
+  hangup: null,
+  destroy: null,
+};
 
 InboundEvents.ring = ({ call, autoAnswer }) => {
+  callIds.push(call.callID);
 
-    callIds.push(call.callID)
+  if (Store.inCourse) {
+    Store.HandleVerto.hangup(call.callID);
+  } else {
+    console.log('Ring Inbound');
+    Events.handleCallState.emit('BINA', call.params.caller_id_number);
+    Events.handleCallState.emit('RECEIVE_CALL', call);
+    Ring.start();
+    Store.firstCallID = call.callID;
+    Store.inCourse = true;
+  }
 
-    if (Context.inCourse) {
-        HandleVerto.hangup(call.callID)
-    } else {
-        console.log('Ring Inbound')
-        Events.handleCallState.emit('bina', call.params.caller_id_number)
-        Events.handleCallState.emit('receiveCall', call)
-        Ring.start()
-        Context.firstCallID = call.callID;
-        context.inCourse = true;
-    }
-
-    if (autoAnswer) {
-        call.answer({
-            outgoingBandwidth: 'default',
-            incomingBandwidth: 'default',
-            useStereo: false,
-            useVideo: false,
-            useCamera: false,
-            useSpeak: 'default',
-            screenShare: false,
-            dedEnc: false,
-            mirrorInput: false,
-        })
-    }
-}
+  if (autoAnswer) {
+    call.answer({
+      outgoingBandwidth: 'default',
+      incomingBandwidth: 'default',
+      useStereo: false,
+      useVideo: false,
+      useCamera: false,
+      useSpeak: 'default',
+      screenShare: false,
+      dedEnc: false,
+      mirrorInput: false,
+    });
+  }
+};
 
 InboundEvents.answering = () => {
-    Ring.end()
-    console.log('Answering Inbound')
-    Events.handleCallState.emit('answering', true)
-}
+  console.log('Answering Inbound');
+  Ring.end();
+  Events.handleCallState.emit('ANSWERING', true);
+};
 
 InboundEvents.active = () => {
-    console.log('Active Inbound')
-    Events.handleCallState.emit('active', true)
-}
+  console.log('Active Inbound');
+  Events.handleCallState.emit('INBOUND_ACTIVE', true);
+};
 
 InboundEvents.hangup = (dialog) => {
-    Events.handleCallState.emit('hangupCause', dialog.cause)
-    console.log('Hangup Inbound')
-    Ring.end()
+  console.log('Hangup Inbound');
+  Events.handleCallState.emit('INBOUND_HANGUP_CAUSE', dialog.cause);
+  Ring.end();
 
-    if (Context.currentCall.callID === Context.firstCallID) {
-        Context.inCourse = false;
-    }
-}
+  if (Store.currentCall.callID === Store.firstCallID) {
+    Store.inCourse = false;
+  }
+};
 
 InboundEvents.destroy = () => {
-    if (callIds.pop() === Context.firstCallID || callIds.length === 0) {
-        Context.currentCall = null;
-        Context.inCourse = false;
-        Context.firstCallID = '';
-        Events.handleCallState.emit('active', false)
-        Events.handleCallState.emit('answering', false)
-    }
-}
+  if (callIds.pop() === Store.firstCallID || callIds.length === 0) {
+    Store.currentCall = null;
+    Store.inCourse = false;
+    Store.firstCallID = '';
+    Events.handleCallState.emit('INBOUND_ACTIVE', false);
+    Events.handleCallState.emit('ANSWERING', false);
+  }
+};
 
-module.exports = { InboundEvents }
+module.exports = InboundEvents;

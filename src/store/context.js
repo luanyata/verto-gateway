@@ -1,7 +1,8 @@
-const Context = {
-    currentCall: null,
-    firstCallID: '',
-    inCourse: false,
-}
+const Store = {
+  currentCall: null,
+  firstCallID: '',
+  inCourse: false,
+  HandleVerto: null,
+};
 
-module.exports = { Context }
+module.exports = Store;
