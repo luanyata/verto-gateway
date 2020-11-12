@@ -1,6 +1,6 @@
 {
     "name": "verto-gateway",
-    "version": "0.3.0",
+    "version": "1.0.0",
     "main": "index.js",
     "description": "Biblioteca de comunicação (chamada de audio, audioconferência, videochamada, videoconferência e troca de mensagem de texto) via browser utilizando Websocket e SIP",
     "scripts": {
