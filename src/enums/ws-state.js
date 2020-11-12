@@ -1,7 +1,8 @@
 const WSState = {
-    LOGIN: 'login',
-    CLOSE: 'close',
-    CONNECT: 'connect',
-}
+  LOGGED: 'logged',
+  CLOSE: 'close',
+  FAILED_LOGIN: 'failed-login',
+  CONNECT: 'connect',
+};
 
-module.exports = { WSState }
+module.exports = WSState;

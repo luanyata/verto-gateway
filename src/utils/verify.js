@@ -1,6 +1,5 @@
-const isNullOrUndefined = value => value === null || value === undefined
+const isNullOrUndefined = (value) => value === null || value === undefined;
 
-const isNullOrUndefinedOrEmpty = value =>
-    isNullOrUndefined(value) || value === ''
+const isNullOrUndefinedOrEmpty = (value) => isNullOrUndefined(value) || value === '';
 
-module.exports = { isNullOrUndefined, isNullOrUndefinedOrEmpty }
+module.exports = { isNullOrUndefined, isNullOrUndefinedOrEmpty };

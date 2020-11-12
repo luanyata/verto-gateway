@@ -1,34 +1,49 @@
+const Store = require('../store');
+const Events = require('../events');
+
+const callIds = [];
+
 const OutboundEvents = {
-    trying: null,
-    early: null,
-    answering: null,
-    active: null,
-    hangup: null,
-    destroy: null,
-}
+  trying: null,
+  active: null,
+  hangup: null,
+  destroy: null,
+};
 
-OutboundEvents.trying = () => {
-    console.log('Trying Outbound')
-}
+OutboundEvents.trying = (call) => {
+  callIds.push(call.callID);
 
-OutboundEvents.early = () => {
-    console.log('Early Outbound')
-}
-
-OutboundEvents.answering = () => {
-    console.log('Answering Outbound')
-}
+  if (Store.inCourse) {
+    Store.HandleVerto.hangup(call.callID);
+  } else {
+    console.log('Trying Outbound');
+    Store.firstCallID = call.callID;
+    Store.inCourse = true;
+    Events.handleCallState.emit('TRYING', true);
+  }
+};
 
 OutboundEvents.active = () => {
-    console.log('Active Outbound')
-}
+  console.log('Active Outbound');
+  Events.handleCallState.emit('OUTBOUND_ACTIVE', true);
+};
 
-OutboundEvents.hangup = () => {
-    console.log('Hangup Outbound')
-}
+OutboundEvents.hangup = (dialog) => {
+  console.log('Hangup Inbound');
+  Events.handleCallState.emit('OUTBOUND_HANGUP_CAUSE', dialog.cause);
+
+  if (Store.currentCall.callID === Store.firstCallID) {
+    Store.inCourse = false;
+  }
+};
 
 OutboundEvents.destroy = () => {
-    console.log('Destroy Outbound')
-}
+  if (callIds.pop() === Store.firstCallID) {
+    Store.firstCallID = '';
+    Store.currentCall = null;
+    Store.inCourse = false;
+    Events.handleCallState.emit('OUTBOUND_ACTIVE', false);
+  }
+};
 
-module.exports = { OutboundEvents }
+module.exports = OutboundEvents;
