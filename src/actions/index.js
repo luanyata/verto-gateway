@@ -18,11 +18,14 @@ const Actions = {
   logout: null,
 };
 
-Actions.call = (origin, destination) => {
+Actions.call = (origin, destination, variables) => {
   if (isNullOrUndefinedOrEmpty(destination)) {
     console.warn('Digite o numero do destinatário');
     return;
   }
+
+  let userVariables = {}
+  if (variables && typeof(variables) === 'object') Object.assign(userVariables, variables)
 
   Store.currentCall = HandleVerto.newCall({
     destination_number: destination,
@@ -37,6 +40,7 @@ Actions.call = (origin, destination) => {
     screenShare: false,
     dedEnc: false,
     mirrorInput: false,
+    userVariables
   });
 };
 
